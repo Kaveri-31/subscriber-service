@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: subscriber-service
+  namespace: {{ .Values.namespace }}
+
+spec:
+  replicas: {{ .Values.subscriber.replicaCount }}
+
+  selector:
+    matchLabels:
+      app: subscriber-service
+
+  template:
+    metadata:
+      labels:
+        app: subscriber-service
+
+    spec:
+      containers:
+
+      - name: subscriber-service
+
+        image: "{{ .Values.subscriber.image.repository }}:{{ .Values.subscriber.image.tag }}"
+
+        imagePullPolicy: {{ .Values.subscriber.image.pullPolicy }}
+
+        ports:
+        - containerPort: {{ .Values.subscriber.service.port }}
+
+        env:
+
+        - name: MONGO_URI
+          valueFrom:
+            configMapKeyRef:
+              name: subscriber-config
+              key: MONGO_URI
+
+        - name: MONGO_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: subscriber-config
+              key: MONGO_DATABASE
+
+        - name: MONGO_COLLECTION
+          valueFrom:
+            configMapKeyRef:
+              name: subscriber-config
+              key: MONGO_COLLECTION
+
+        - name: KAFKA_BROKER
+          valueFrom:
+            configMapKeyRef:
+              name: subscriber-config
+              key: KAFKA_BROKER
+
+        - name: KAFKA_TOPIC
+          valueFrom:
+            configMapKeyRef:
+              name: subscriber-config
+              key: KAFKA_TOPIC
+
+        livenessProbe:
+          httpGet:
+            path: /live
+            port: {{ .Values.subscriber.service.port }}
+          initialDelaySeconds: 20
+          periodSeconds: 10
+
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: {{ .Values.subscriber.service.port }}
+          initialDelaySeconds: 10
+          periodSeconds: 5

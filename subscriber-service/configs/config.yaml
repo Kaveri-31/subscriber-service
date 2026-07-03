@@ -1,0 +1,15 @@
+application:
+  name: Subscriber Service
+  environment: development
+
+server:
+  port: 7070
+
+mongodb:
+  uri: mongodb://localhost:27017
+  database: telecom
+  collection: subscribers
+
+kafka:
+  broker: localhost:9092
+  topic: subscriber-events

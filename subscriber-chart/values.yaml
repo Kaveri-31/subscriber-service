@@ -1,0 +1,32 @@
+namespace: telecom
+
+subscriber:
+  image:
+    repository: subscriber-service
+    tag: v1
+    pullPolicy: Never
+
+  replicaCount: 1
+
+  service:
+    type: NodePort
+    port: 7070
+    nodePort: 31727
+
+mongodb:
+  image: mongo:8
+  port: 27017
+  storage: 2Gi
+
+kafka:
+  image: apache/kafka:4.0.0
+  port: 9092
+
+config:
+  APP_NAME: Subscriber Service
+  SERVER_PORT: "7070"
+  MONGO_URI: mongodb://mongodb:27017
+  MONGO_DATABASE: telecom
+  MONGO_COLLECTION: subscribers
+  KAFKA_BROKER: kafka:9092
+  KAFKA_TOPIC: subscriber-events

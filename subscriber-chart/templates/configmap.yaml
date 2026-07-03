@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: subscriber-config
+  namespace: {{ .Values.namespace }}
+
+data:
+  APP_NAME: {{ .Values.config.APP_NAME | quote }}
+  SERVER_PORT: {{ .Values.config.SERVER_PORT | quote }}
+  MONGO_URI: {{ .Values.config.MONGO_URI | quote }}
+  MONGO_DATABASE: {{ .Values.config.MONGO_DATABASE | quote }}
+  MONGO_COLLECTION: {{ .Values.config.MONGO_COLLECTION | quote }}
+  KAFKA_BROKER: {{ .Values.config.KAFKA_BROKER | quote }}
+  KAFKA_TOPIC: {{ .Values.config.KAFKA_TOPIC | quote }}

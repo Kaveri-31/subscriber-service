@@ -1,0 +1,72 @@
+package repository
+
+import "subscriber-service/internal/model"
+
+var Subscribers = []model.Subscriber{
+	{
+		ID:     1,
+		IMSI:   "404450123456789",
+		MSISDN: "919876543210",
+		Plan:   "5G Premium",
+		Status: "Active",
+	},
+}
+
+func GetAllSubscribers() []model.Subscriber {
+	return Subscribers
+}
+
+func GetSubscriberByID(id int) *model.Subscriber {
+
+	for _, subscriber := range Subscribers {
+
+		if subscriber.ID == id {
+			return &subscriber
+		}
+	}
+
+	return nil
+}
+
+func CreateSubscriber(subscriber model.Subscriber) model.Subscriber {
+
+	Subscribers = append(Subscribers, subscriber)
+
+	return subscriber
+}
+
+func UpdateSubscriber(
+	id int,
+	updatedSubscriber model.Subscriber,
+) *model.Subscriber {
+
+	for i, subscriber := range Subscribers {
+
+		if subscriber.ID == id {
+
+			Subscribers[i] = updatedSubscriber
+
+			return &Subscribers[i]
+		}
+	}
+
+	return nil
+}
+
+func DeleteSubscriber(id int) bool {
+
+	for i, subscriber := range Subscribers {
+
+		if subscriber.ID == id {
+
+			Subscribers = append(
+				Subscribers[:i],
+				Subscribers[i+1:]...,
+			)
+
+			return true
+		}
+	}
+
+	return false
+}

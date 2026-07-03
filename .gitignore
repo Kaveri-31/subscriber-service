@@ -1,0 +1,29 @@
+# Go
+*.exe
+*.test
+*.out
+
+# Binary
+subscriber-service/subscriber-service
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Kubernetes
+*.tar
+
+# Environment
+.env
+
+# Go cache
+vendor/
+
+# Helm package
+*.tgz
